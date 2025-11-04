@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$hs.kotlin.version"
+        classpath libs.kotlin.gradle.plugin
     }
 }
 
@@ -16,14 +16,15 @@ subprojects {
     apply plugin: 'hyperskill'
 
     def userJava = Integer.parseInt(JavaVersion.current().getMajorVersion())
-    def hsJava = Integer.parseInt(hs.kotlin.javaVersion)
+    def hsJava = Integer.parseInt(libs.versions.kotlin.java.get())
+    def targetJava = Math.min(hsJava, 17)
     def testJava = Math.max(userJava, hsJava)
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(testJava)
 
     compileJava {
         javaCompiler = javaToolchains.compilerFor {
-            languageVersion = JavaLanguageVersion.of(userJava)
+            languageVersion = JavaLanguageVersion.of(targetJava)
         }
     }
 
@@ -35,7 +36,7 @@ subprojects {
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
-            jvmTarget = Math.min(hsJava, 17).toString()
+            jvmTarget = targetJava.toString()
         }
     }
 
@@ -46,7 +47,7 @@ subprojects {
     }
 
     dependencies {
-        testImplementation 'com.github.hyperskill:hs-test:release-SNAPSHOT'
+        testImplementation libs.hs.test
     }
 
     configurations.all {
@@ -71,5 +72,5 @@ subprojects {
 
 
 wrapper {
-    gradleVersion = hs.gradle.version
+    gradleVersion = libs.versions.gradle.get()
 }

@@ -5,12 +5,16 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.github.hyperskill:hs-gradle-plugin:release-SNAPSHOT"
+        classpath "com.github.hyperskill:hs-gradle-plugin:1.8.5"
     }
 
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
 static String sanitizeName(String name) {

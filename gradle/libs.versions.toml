@@ -1,0 +1,14 @@
+[versions]
+kotlin = "2.2.21"
+kotlin-java = "17"
+gradle = "8.5"
+hs-test = "12.0.3"
+hs-gradle-plugin = "1.8.5"
+
+[libraries]
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+hs-test = { module = "com.github.hyperskill:hs-test", version.ref = "hs-test" }
+hs-gradle-plugin = { module = "com.github.hyperskill:hs-gradle-plugin", version.ref = "hs-gradle-plugin" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
