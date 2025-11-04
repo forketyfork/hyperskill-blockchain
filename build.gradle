@@ -33,6 +33,12 @@ subprojects {
         }
     }
 
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = Math.min(hsJava, 17).toString()
+        }
+    }
+
     repositories {
         mavenCentral()
         maven { url "https://packages.jetbrains.team/maven/p/academy/hyperskill-hspc" }
@@ -63,18 +69,6 @@ subprojects {
     }
 }
 
-project(':util') {
-    dependencies {
-        implementation 'com.github.hyperskill:hs-test:release-SNAPSHOT'
-    }
-}
-
-configure(subprojects.findAll {it.name != 'util'}) {
-    dependencies {
-        testImplementation project(':util').sourceSets.main.output
-        testImplementation project(':util').sourceSets.test.output
-    }
-}
 
 wrapper {
     gradleVersion = hs.gradle.version
